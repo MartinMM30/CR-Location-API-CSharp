@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Proyecto1.Models.Empleado>
+
+@{
+    ViewData["Title"] = "Gestión de Empleados";
+}
+
+<h1>Gestión de Empleados</h1>
+
+<div class="mb-3 d-flex gap-2">
+    <a asp-action="Create" class="btn btn-primary">Registrar Nuevo Empleado</a>
+
+    <form asp-action="Buscar" method="get" class="d-flex">
+        <input type="text" name="terminoBusqueda" class="form-control me-2" placeholder="Digite la cédula..." required />
+        <button type="submit" class="btn btn-info text-white">Buscar Empleado</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Limpiar Filtro</a>
+    </form>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Identificación</th>
+            <th>Nombre Completo</th>
+            <th>Categoría</th>
+            <th>Provincia</th>
+            <th>Fecha Ingreso</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Identificacion</td>
+                <td>@item.Nombre @item.PrimerApellido</td>
+                <!-- Al imprimir un Enum, mostrará automáticamente el texto (ej. "Mantenimiento") -->
+                <td>@item.Categoria</td>
+                <td>@item.Provincia</td>
+                <td>@item.FechaIngreso.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Identificacion" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Identificacion" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

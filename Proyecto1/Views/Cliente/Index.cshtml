@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Proyecto1.Models.Cliente>
+
+@{
+    ViewData["Title"] = "Lista de Clientes";
+}
+
+<h1>Gestión de Clientes</h1>
+
+<div class="mb-3 d-flex gap-2">
+    <a asp-action="Create" class="btn btn-primary">Registrar Nuevo Cliente</a>
+
+    <form asp-action="Buscar" method="get" class="d-flex">
+        <input type="text" name="terminoBusqueda" class="form-control me-2" placeholder="Digite la cédula..." required />
+        <button type="submit" class="btn btn-info text-white">Buscar Cliente</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Limpiar Filtro</a>
+    </form>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Identificación</th>
+            <th>Nombre</th>
+            <th>Primer Apellido</th>
+            <th>Segundo Apellido</th>
+            <th>Fecha Nacimiento</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Identificacion</td>
+                <td>@item.Nombre</td>
+                <td>@item.PrimerApellido</td>
+                <td>@item.SegundoApellido</td>
+                <td>@item.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Identificacion" class="btn btn-warning btn-sm">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Identificacion" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

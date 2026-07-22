@@ -1,0 +1,56 @@
+﻿@model Proyecto1.Models.Habitacion
+@{
+    ViewData["Title"] = "Registrar Habitación";
+}
+
+<h1>Editar Habitación</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="NumeroHabitacion" class="control-label"></label>
+                <input asp-for="NumeroHabitacion" class="form-control" type="number" readonly/>
+                <span asp-validation-for="NumeroHabitacion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Tipo" class="control-label"></label>
+                <select asp-for="Tipo" asp-items="Html.GetEnumSelectList<Proyecto1.Models.TipoHabitacion>()" class="form-select">
+                    <option value="">-- Seleccione --</option>
+                </select>
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="TarifaPorNoche" class="control-label"></label>
+                <input asp-for="TarifaPorNoche" class="form-control" type="number" step="0.01" />
+                <span asp-validation-for="TarifaPorNoche" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-3">
+                <input asp-for="TieneTVSatelital" class="form-check-input" />
+                <label asp-for="TieneTVSatelital" class="form-check-label"></label>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="PendientesMantenimiento" class="control-label"></label>
+                <textarea asp-for="PendientesMantenimiento" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="PendientesMantenimiento" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4">
+                <input type="submit" value="Guardar" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

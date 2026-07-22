@@ -1,0 +1,176 @@
+﻿@model Proyecto1.Models.Empleado
+
+@{
+    ViewData["Title"] = "Registrar Empleado";
+}
+
+<h1>Registrar Empleado</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold">Categoría de Documento de Identidad</label>
+                <select class="form-select" id="categoriaIdentificacion" onchange="mostrarAyudaIdentificacion()">
+                    <option value="">-- Seleccione el tipo de documento --</option>
+                    <option value="cedula">Cédula Nacional (9 dígitos)</option>
+                    <option value="dimex">DIMEX (11 o 12 dígitos)</option>
+                    <option value="pasaporte">Pasaporte (Alfanumérico)</option>
+                </select>
+                <small id="ayudaIdentificacion" class="form-text text-muted"></small>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Identificacion" class="control-label"></label>
+                <input asp-for="Identificacion" class="form-control" />
+                <span asp-validation-for="Identificacion" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group mb-3">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label asp-for="PrimerApellido" class="control-label"></label>
+                    <input asp-for="PrimerApellido" class="form-control" />
+                    <span asp-validation-for="PrimerApellido" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label asp-for="SegundoApellido" class="control-label"></label>
+                    <input asp-for="SegundoApellido" class="form-control" />
+                    <span asp-validation-for="SegundoApellido" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                    <label asp-for="FechaNacimiento" class="control-label"></label>
+                    <input asp-for="FechaNacimiento" class="form-control" type="date" />
+                    <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 form-group mb-3">
+                    <label asp-for="FechaIngreso" class="control-label"></label>
+                    <input asp-for="FechaIngreso" class="form-control" type="date" />
+                    <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 form-group mb-3">
+                    <label asp-for="SalarioMensual" class="control-label"></label>
+                    <input asp-for="SalarioMensual" class="form-control" type="number" step="0.01" />
+                    <span asp-validation-for="SalarioMensual" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 form-group mb-3">
+                    <label asp-for="Categoria" class="control-label"></label>
+                    <select asp-for="Categoria" asp-items="Html.GetEnumSelectList<Proyecto1.Models.CategoriaEmpleado>()" class="form-select">
+                        <option value="">-- Seleccione --</option>
+                    </select>
+                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group mb-3">
+                    <label asp-for="Provincia" class="control-label"></label>
+                    <select asp-for="Provincia" id="ddlProvincia" class="form-select">
+                        <option value="">-- Provincia --</option>
+                        @if (ViewBag.Provincias != null)
+                        {
+                            foreach (var prov in ViewBag.Provincias)
+                            {
+                                <option value="@prov">@prov</option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="Provincia" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label asp-for="Canton" class="control-label"></label>
+                    <select asp-for="Canton" id="ddlCanton" class="form-select">
+                        <option value="">-- Cantón --</option>
+                    </select>
+                    <span asp-validation-for="Canton" class="text-danger"></span>
+                </div>
+                <div class="col-md-4 form-group mb-3">
+                    <label asp-for="Distrito" class="control-label"></label>
+                    <select asp-for="Distrito" id="ddlDistrito" class="form-select">
+                        <option value="">-- Distrito --</option>
+                    </select>
+                    <span asp-validation-for="Distrito" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="DireccionExacta" class="control-label"></label>
+                <textarea asp-for="DireccionExacta" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="DireccionExacta" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4">
+                <input type="submit" value="Guardar Empleado" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Regresar a la Lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        // Lógica de listas en cascada (Dinamismo)
+        document.getElementById("ddlProvincia").addEventListener("change", function () {
+            var provincia = this.value;
+            var cantonSelect = document.getElementById("ddlCanton");
+            var distritoSelect = document.getElementById("ddlDistrito");
+
+            cantonSelect.innerHTML = '<option value="">-- Cantón --</option>';
+            distritoSelect.innerHTML = '<option value="">-- Distrito --</option>';
+
+            if (provincia) {
+                fetch('/Empleado/ObtenerCantones?provincia=' + encodeURIComponent(provincia))
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(canton => {
+                            cantonSelect.innerHTML += `<option value="${canton}">${canton}</option>`;
+                        });
+                    });
+            }
+        });
+
+        document.getElementById("ddlCanton").addEventListener("change", function () {
+            var canton = this.value;
+            var distritoSelect = document.getElementById("ddlDistrito");
+            distritoSelect.innerHTML = '<option value="">-- Distrito --</option>';
+
+            if (canton) {
+                fetch('/Empleado/ObtenerDistritos?canton=' + encodeURIComponent(canton))
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(distrito => {
+                            distritoSelect.innerHTML += `<option value="${distrito}">${distrito}</option>`;
+                        });
+                    });
+            }
+        });
+    </script>
+    <script>
+        function mostrarAyudaIdentificacion() {
+            var seleccion = document.getElementById("categoriaIdentificacion").value;
+            var ayuda = document.getElementById("ayudaIdentificacion");
+            if (seleccion === "cedula") ayuda.innerText = "Formato: #-####-#### o 9 dígitos seguidos.";
+            else if (seleccion === "dimex") ayuda.innerText = "Formato: 11 o 12 dígitos seguidos.";
+            else if (seleccion === "pasaporte") ayuda.innerText = "Puede contener letras y números.";
+            else ayuda.innerText = "";
+        }
+    </script>
+
+}

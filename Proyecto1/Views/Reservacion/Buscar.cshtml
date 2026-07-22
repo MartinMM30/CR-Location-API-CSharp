@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Proyecto1.Models.Reservacion>
+@{
+    ViewData["Title"] = "Buscar Reservación";
+}
+
+<h1>Buscar Reservación</h1>
+<hr />
+<div class="row mb-4">
+    <div class="col-md-6">
+        <form asp-action="Buscar" method="post" class="d-flex">
+            <input type="text" name="terminoBusqueda" class="form-control me-2" placeholder="Ingrese Código o ID de Cliente..." required />
+            <button type="submit" class="btn btn-primary">Buscar</button>
+        </form>
+    </div>
+</div>
+
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-warning">@ViewBag.Mensaje</div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <h4>Resultados Encontrados:</h4>
+    <table class="table table-bordered mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Código</th>
+                <th>Cliente</th>
+                <th>Habitación</th>
+                <th>Fechas</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var res in Model)
+            {
+                <tr>
+                    <td>@res.Codigo</td>
+                    <td>@res.IdentificacionCliente</td>
+                    <td>#@res.NumeroHabitacion</td>
+                    <td>@res.FechaIngreso.ToString("dd/MM/yyyy") al @res.FechaSalida.ToString("dd/MM/yyyy")</td>
+                    <td>@res.Estado</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<div class="mt-3"><a asp-action="Index" class="btn btn-secondary">Regresar a la Lista</a></div>

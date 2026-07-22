@@ -1,0 +1,27 @@
+﻿@model Proyecto1.Models.Empleado
+
+@{
+    ViewData["Title"] = "Eliminar Empleado";
+}
+
+<h1>Eliminar Empleado</h1>
+<h3 class="text-danger">¿Está seguro que desea eliminar este registro?</h3>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Identificación:</dt>
+        <dd class="col-sm-9">@Model.Identificacion</dd>
+
+        <dt class="col-sm-3">Nombre Completo:</dt>
+        <dd class="col-sm-9">@Model.Nombre @Model.PrimerApellido @Model.SegundoApellido</dd>
+
+        <dt class="col-sm-3">Categoría:</dt>
+        <dd class="col-sm-9">@Model.Categoria</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Identificacion" />
+        <input type="submit" value="Eliminar Permanentemente" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

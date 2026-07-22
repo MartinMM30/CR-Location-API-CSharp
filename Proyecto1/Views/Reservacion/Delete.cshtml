@@ -1,0 +1,29 @@
+﻿@model Proyecto1.Models.Reservacion
+@{
+    ViewData["Title"] = "Eliminar Reservación";
+}
+
+<h1>Eliminar Reservación</h1>
+<h3 class="text-danger">¿Está seguro que desea eliminar la reservación @Model.Codigo?</h3>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">Código:</dt>
+        <dd class="col-sm-8">@Model.Codigo</dd>
+
+        <dt class="col-sm-4">Identificación Cliente:</dt>
+        <dd class="col-sm-8">@Model.IdentificacionCliente</dd>
+
+        <dt class="col-sm-4">Habitación:</dt>
+        <dd class="col-sm-8">#@Model.NumeroHabitacion</dd>
+
+        <dt class="col-sm-4">Fechas:</dt>
+        <dd class="col-sm-8">@Model.FechaIngreso.ToString("dd/MM/yyyy") al @Model.FechaSalida.ToString("dd/MM/yyyy")</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Codigo" />
+        <input type="submit" value="Eliminar Permanentemente" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

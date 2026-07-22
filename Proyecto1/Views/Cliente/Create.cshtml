@@ -1,0 +1,78 @@
+﻿@model Proyecto1.Models.Cliente
+
+@{
+    ViewData["Title"] = "Registrar Cliente";
+}
+
+<h1>Registrar Cliente</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold">Categoría de Documento de Identidad</label>
+                <select class="form-select" id="categoriaIdentificacion" onchange="mostrarAyudaIdentificacion()">
+                    <option value="">-- Seleccione el tipo de documento --</option>
+                    <option value="cedula">Cédula Nacional (9 dígitos)</option>
+                    <option value="dimex">DIMEX (11 o 12 dígitos)</option>
+                    <option value="pasaporte">Pasaporte (Alfanumérico)</option>
+                </select>
+                <small id="ayudaIdentificacion" class="form-text text-muted"></small>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Identificacion" class="control-label"></label>
+                <input asp-for="Identificacion" class="form-control" />
+                <span asp-validation-for="Identificacion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="PrimerApellido" class="control-label"></label>
+                <input asp-for="PrimerApellido" class="form-control" />
+                <span asp-validation-for="PrimerApellido" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="SegundoApellido" class="control-label"></label>
+                <input asp-for="SegundoApellido" class="form-control" />
+                <span asp-validation-for="SegundoApellido" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="FechaNacimiento" class="control-label"></label>
+                <input asp-for="FechaNacimiento" class="form-control" type="date" />
+                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mt-4">
+                <input type="submit" value="Guardar Cliente" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Regresar a la Lista</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function mostrarAyudaIdentificacion() {
+            var seleccion = document.getElementById("categoriaIdentificacion").value;
+            var ayuda = document.getElementById("ayudaIdentificacion");
+            if (seleccion === "cedula") ayuda.innerText = "Formato: #-####-#### o 9 dígitos seguidos.";
+            else if (seleccion === "dimex") ayuda.innerText = "Formato: 11 o 12 dígitos seguidos.";
+            else if (seleccion === "pasaporte") ayuda.innerText = "Puede contener letras y números.";
+            else ayuda.innerText = "";
+        }
+    </script>
+}

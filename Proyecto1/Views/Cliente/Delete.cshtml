@@ -1,0 +1,30 @@
+﻿@model Proyecto1.Models.Cliente
+
+@{
+    ViewData["Title"] = "Eliminar Cliente";
+}
+
+<h1>Eliminar Cliente</h1>
+@if (ViewBag.ErrorIntegridad != null)
+{
+    <div class="alert alert-danger">
+        <strong>¡Atención!</strong> @ViewBag.ErrorIntegridad
+    </div>
+}
+<h3 class="text-danger">¿Está seguro que desea eliminar este registro?</h3>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Identificación:</dt>
+        <dd class="col-sm-9">@Model.Identificacion</dd>
+
+        <dt class="col-sm-3">Nombre:</dt>
+        <dd class="col-sm-9">@Model.Nombre @Model.PrimerApellido @Model.SegundoApellido</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Identificacion" />
+        <input type="submit" value="Eliminar Permanentemente" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

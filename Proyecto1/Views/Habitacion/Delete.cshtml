@@ -1,0 +1,19 @@
+﻿@model Proyecto1.Models.Habitacion
+@{
+    ViewData["Title"] = "Eliminar Habitación";
+}
+
+<h1>Eliminar Habitación</h1>
+@if (ViewBag.ErrorIntegridad != null)
+{
+    <div class="alert alert-danger">
+        <strong>¡Atención!</strong> @ViewBag.ErrorIntegridad
+    </div>
+}
+<h3 class="text-danger">¿Está seguro de eliminar la habitación @Model.NumeroHabitacion?</h3>
+<hr />
+<form asp-action="Delete">
+    <input type="hidden" asp-for="NumeroHabitacion" />
+    <input type="submit" value="Eliminar Permanentemente" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
